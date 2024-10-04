@@ -130,7 +130,7 @@
                   <p class="text-sm text-success">
                     <!-- <i class="lni lni-arrow-up"></i> +2.00% -->
                     <!-- <span class="text-gray">(30 days)</span> -->
-                    <!-- vevedvre -->
+               
                   </p>
                 </div>
               </div>
