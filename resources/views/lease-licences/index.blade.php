@@ -79,9 +79,7 @@
                               <th>
                                 <h6>ESCALATION AMOUNT </h6>
                               </th>
-                              <th>
-                                <h6>REMARKS</h6>
-                              </th>
+                             
 
 
 
@@ -102,7 +100,7 @@
                               <td>{{number_format($value->deposit)}}</td>
                               <td>{{$value->escalation_percentage}}%</td>
                               <td>{{number_format($value->escalation_amount,2)}}</td>
-                              <td>{{$value->remarks}}</td>
+                              
                              
                               
                             
