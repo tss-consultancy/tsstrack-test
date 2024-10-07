@@ -1,0 +1,94 @@
+body {
+    background-color: #000; /* This is now handled by Bootstrap's bg-dark class */
+    color: #ffffff; /* This is now handled by Bootstrap's text-white class */
+}
+
+
+.custom-text-color {
+    color: #b6b2b1;
+}
+
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+
+.form-control {
+    background-color: #ffffff; /* bg-light Bootstrap class */
+    color: #000000; /* text-dark Bootstrap class */
+    border: 1px solid #4c4c4c; /* border-secondary Bootstrap class */
+}
+
+
+.form-control::placeholder {
+    color: #888;
+}
+
+
+.text-decoration-none {
+    color: #007bff;
+   
+}
+
+
+.text-decoration-none:hover {
+    color: #0056b3;
+}
+
+
+h2, p {
+    color: #fff;
+}
+
+
+@media (max-width: 767.98px) {
+    .card {
+        padding: 1rem;
+    }
+
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+
+    p {
+        font-size: 1rem;
+    }
+}
+
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .card {
+        padding: 2rem;
+    }
+
+
+    h2 {
+        font-size: 1.75rem;
+    }
+
+
+    p {
+        font-size: 1.25rem;
+    }
+}
+
+
+@media (min-width: 992px) {
+    .card {
+        padding: 3rem;
+    }
+
+
+    h2 {
+        font-size: 2rem;
+    }
+
+
+    p {
+        font-size: 1.5rem;
+    }
+}
