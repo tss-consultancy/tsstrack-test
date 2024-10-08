@@ -6,6 +6,7 @@ use App\Http\Controllers\FrequenciesController;
 use App\Http\Controllers\MembersController;
 use App\Http\Controllers\CommitteesController;
 use App\Http\Controllers\CommitteeMeetingsController;
+use App\Http\Controllers\LeaveLicenseController;
 use App\Http\Controllers\MeetingRoomController;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\MasterController;
@@ -173,4 +174,79 @@ Route::middleware(['guard'])->group(function(){
     Route::get('calculate-lease/calculate', [LeaseLicencesController::class, 'showForm']);
     Route::post('/calculate-lease', [LeaseLicencesController::class, 'calculateLease'])->name('calculateLease');
     Route::get('/calculate-lease', [LeaseLicencesController::class, 'calculateLease'])->name('calculateLease');
+    
+    // Leave License Entry Routes
+Route::get('/leave-license-entry/index', [LeaveLicenseEntryController::class, 'index'])->name('leave-license-entries.index');
+Route::get('/leave-license-entry/create', [LeaveLicenseEntryController::class, 'create'])->name('leave-license-entries.create');
+Route::post('/leave-license-entry/store', [LeaveLicenseEntryController::class, 'store'])->name('leave-license-entries.store');
+Route::get('/leave-license-entry/{leave_license_entry}/edit', [LeaveLicenseEntryController::class, 'edit'])->name('leave-license-entries.edit');
+Route::put('/leave-license-entry/{leave_license_entry}', [LeaveLicenseEntryController::class, 'update'])->name('leave-license-entries.update');
+Route::delete('/leave-license-entry/{leave_license_entry}', [LeaveLicenseEntryController::class, 'destroy'])->name('leave-license-entries.destroy');
+Route::get('/leave-license-entry/{leave_license_entry}', [LeaveLicenseEntryController::class, 'show'])->name('leave-license-entries.show');
+Route::get('leave-license/export', [LeaveLicenseEntryController::class, 'export'])->name('leave-license.export');
+Route::get('leave-license/calculate-escalation/{id}', [LeaveLicenseEntryController::class, 'calculateEscalation'])->name('leave-license.calculate-escalation');
+
+// Escalation Forecast Routes
+Route::get('/escalation-forecast', [EscalationForecastController::class, 'index'])->name('escalation.forecast');
+Route::get('/escalation/{id}/view', [EscalationForecastController::class, 'view'])->name('escalation.view');
+Route::get('/escalation/{id}/edit', [EscalationForecastController::class, 'edit'])->name('escalation.edit');
+Route::post('/escalation/forecast', [EscalationForecastController::class, 'generateForecast'])->name('escalation.forecast');
+Route::get('/escalation-forecast/download/excel', [EscalationForecastController::class, 'downloadExcel'])->name('escalation.forecast.download.excel');
+Route::get('/escalation-forecast/download/pdf', [EscalationForecastController::class, 'downloadPDF'])->name('escalation.forecast.download.pdf');
+
+
+
+Route::get('/generate-pdf', [ReportController::class, 'generatePdf']);
+Route::resource('leave-license', LeaveLicenseEntryController::class);
+
+// Route to show the escalation forecast form
+Route::get('/escalation-forecast', [EscalationForecastController::class, 'index'])->name('escalation.forecast.view');
+
+// Route to handle the form submission
+Route::post('/escalation-forecast', [EscalationForecastController::class, 'showForecast'])->name('escalation.forecast');
+
+Route::resource('leave-license', LeaveLicenseEntryController::class);
+// Route::get('leave-license/edit/{id}', [LeaveLicenseController::class, 'edit'])->name('leave-license.edit');
+// Route::resource('leave-license', LeaveLicenseEntryController::class);
+Route::put('leave-license/{id}', [LeaveLicenseEntryController::class, 'update'])->name('leave-license.update');
+Route::get('leave-license/{id}/edit', [LeaveLicenseEntryController::class, 'edit'])->name('leave-license.edit');
+
+
+
+Route::get('/forecast-report', [ForecastReportController::class, 'index'])->name('forecast.report.index');
+Route::post('/forecast-report/generate', [ForecastReportController::class, 'generateReport'])->name('forecast.report.generate');
+Route::get('/forecast-report/download/pdf', [ForecastReportController::class, 'downloadPdf'])->name('forecast.report.download.pdf');
+Route::get('/forecast-report/download/excel', [ForecastReportController::class, 'downloadExcel'])->name('forecast.report.download.excel');
+
+Route::get('/escalation-forecast', [EscalationForecastController::class, 'index'])->name('escalation.forecast.index');
+Route::post('/escalation-forecast/show', [EscalationForecastController::class, 'showForecast'])->name('escalation.forecast.show');
+Route::get('/escalation-forecast/download/excel', [EscalationForecastController::class, 'downloadExcel'])->name('escalation.forecast.download.excel');
+Route::get('/escalation-forecast/download/pdf', [EscalationForecastController::class, 'downloadPDF'])->name('escalation.forecast.download.pdf');
+
+
+
+// routes/web.php
+Route::get('/escalation-calculation', [LeaveLicenseEntryController::class, 'showEscalationCalculation'])->name('escalation.calculation');
+// routes/web.php
+
+Route::get('/calculate-escalation/{id}', [LeaveLicenseEntryController::class, 'calculateEscalation'])->name('calculate.escalation');
+
+
+
+
+Route::get('/leave-license/download', [LeaveLicenseController::class, 'download'])->name('leave-license.download');
+
+
+
+Route::get('/leave-license/download', [LeaveLicenseEntryController::class, 'download'])->name('leaveLicense.download');
+
+
+
+Route::get('/leave-license-entry/download', [LeaveLicenseEntryController::class, 'download'])->name('leave-license.download');
+
+
+
+Route::get('/escalation-forecast/download/excel', [EscalationForecastController::class, 'downloadExcel'])->name('escalation.forecast.download.excel');
+Route::get('/escalation-forecast/download/pdf', [EscalationForecastController::class, 'downloadPDF'])->name('escalation.forecast.download.pdf');
+
 });
