@@ -118,7 +118,7 @@
 
                     <div class="col-12">
                         <button id="submitBtn" class="main-btn dark-btn btn-hover submitbtn" name="submit">
-                            Add Ip Address
+                            Add Ip 
                         </button>
                     </div>
                 </div>
