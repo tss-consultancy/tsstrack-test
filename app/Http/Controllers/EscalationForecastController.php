@@ -53,6 +53,7 @@ class EscalationForecastController extends Controller
         return view('leave-license-entries.escalation-forecast', compact('forecasts', 'fromDate', 'toDate'));
     }
 
+
     // Download the forecast data as an Excel file
     public function downloadExcel(Request $request)
     {
@@ -93,3 +94,31 @@ class EscalationForecastController extends Controller
         return $from->diffInMonths($to);
     }
 }
+
+
+    // Calculate the number of months between two dates
+    protected function calculateMonths($fromDate, $toDate)
+    {
+        $from = Carbon::createFromFormat('Y-m-d', $fromDate);
+        $to = Carbon::createFromFormat('Y-m-d', $toDate);
+        return $from->diffInMonths($to);
+    }
+
+
+
+    public function downloadExcel(Request $request)
+    {
+        // You might want to filter or fetch data based on user input
+        return Excel::download(new EscalationForecastExport($request->from_date, $request->to_date), 'escalation_forecast.xlsx');
+    }
+
+    public function downloadPDF(Request $request)
+    {
+        // Fetch your data based on the date range
+        $forecasts = LeaveLicense::whereBetween('date', [$request->from_date, $request->to_date])->get();
+        
+        $pdf = PDF::loadView('pdf.escalation_forecast', compact('forecasts'));
+        return $pdf->download('escalation_forecast.pdf');
+    }
+}
+
