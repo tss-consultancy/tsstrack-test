@@ -168,5 +168,8 @@ Route::get('/leave-license-entry/download', [LeaveLicenseEntryController::class,
 
 
 
+
+
 Route::get('/escalation-forecast/download/excel', [EscalationForecastController::class, 'downloadExcel'])->name('escalation.forecast.download.excel');
 Route::get('/escalation-forecast/download/pdf', [EscalationForecastController::class, 'downloadPDF'])->name('escalation.forecast.download.pdf');
+

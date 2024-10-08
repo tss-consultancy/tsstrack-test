@@ -54,6 +54,48 @@ class EscalationForecastController extends Controller
     }
 
 
+    // Download the forecast data as an Excel file
+    public function downloadExcel(Request $request)
+    {
+        return Excel::download(new EscalationForecastExport($request->input('from_date'), $request->input('to_date')), 'escalation_forecast.xlsx');
+    }
+
+    // Download the forecast data as a PDF file
+    public function downloadPDF(Request $request)
+    {
+        // Fetch Leave License Entries for PDF download
+        $leaveLicenses = LeaveLicenseEntry::all();
+
+        // Calculate escalation for each entry for PDF
+        $forecasts = $leaveLicenses->map(function ($entry) use ($request) {
+            // Calculate the number of months for the selected range
+            $months = $this->calculateMonths($request->from_date, $request->to_date);
+
+            // Escalation calculation
+            $escalationAmount = ($entry->rent * $entry->escalation / 100) * ($months / 12);
+            $totalAmount = $entry->rent + $escalationAmount;
+
+            // Store the calculated amounts in the entry
+            $entry->calculated_escalation = round($escalationAmount, 2);
+            $entry->total_amount = round($totalAmount, 2);
+
+            return $entry;
+        });
+
+        $pdf = PDF::loadView('leave-license-entries.pdf-escalation-forecast', compact('forecasts'));
+        return $pdf->download('escalation_forecast.pdf');
+    }
+
+    // Calculate the number of months between two dates
+    protected function calculateMonths($fromDate, $toDate)
+    {
+        $from = Carbon::createFromFormat('Y-m-d', $fromDate);
+        $to = Carbon::createFromFormat('Y-m-d', $toDate);
+        return $from->diffInMonths($to);
+    }
+}
+
+
     // Calculate the number of months between two dates
     protected function calculateMonths($fromDate, $toDate)
     {
@@ -79,3 +121,4 @@ class EscalationForecastController extends Controller
         return $pdf->download('escalation_forecast.pdf');
     }
 }
+
